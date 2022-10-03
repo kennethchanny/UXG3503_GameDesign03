@@ -4,109 +4,61 @@ using UnityEngine;
 
 public class Swing : MonoBehaviour
 {
-    Rigidbody2D m_RB;
-    Vector2 m_Force = Vector2.zero;
-    public float m_MoveForce;
-    public float m_maxmoveDist;
+    public float moveSpeed = 0;
+    public int leverDirection = 0;
+    public Transform rightrope;
+    public Transform leftrope;
 
-    private Vector3 m_startpos;
-    private float spawndelaytimer = 0.7f;
- 
-
-    bool isScaling = false;
-    public enum SwingState
-    { 
-        LEFT,
-        RIGHT,
-        IDLE
-    }
-    public SwingState m_currentstate = SwingState.IDLE;
-
-
-    // Start is called before the first frame update
-    public void MoveSwing(int id)
+    public void DebugToggleLever()
     {
-        switch (id)
+        if(Input.GetKeyDown(KeyCode.K))
         {
+            ToggleLever();
+            Debug.Log(leverDirection);
+        }
+    }
+
+    public void ToggleLever()
+    {
+        switch (leverDirection)
+        {
+
+            case 0:
+                {
+                    leverDirection = 1;
+                }
+                break;
             case 1:
                 {
-                    if(m_currentstate == SwingState.IDLE)
-                    {
-                        m_currentstate = SwingState.LEFT;
-                    }
-
-                    else if(m_currentstate == SwingState.LEFT)
-                    {
-                        m_currentstate = SwingState.IDLE;
-                    }
-                    else if (m_currentstate == SwingState.RIGHT)
-                    {
-                        //Zero out
-                        m_Force = Vector2.zero;
-                        m_RB.velocity = Vector2.zero;
-                        m_currentstate = SwingState.LEFT;
-                    }
-
-                    //Go Left
-
+                    leverDirection = -1;
                 }
                 break;
-            case 2:
+            case -1:
                 {
-
-                    if (m_currentstate == SwingState.IDLE)
-                    {
-                        m_currentstate = SwingState.RIGHT;
-                    }
-
-                    else if (m_currentstate == SwingState.RIGHT)
-                    {
-
-                        m_currentstate = SwingState.IDLE;
-                    }
-                    else if (m_currentstate == SwingState.LEFT)
-                    {
-                        //Zero out
-                        m_Force = Vector2.zero;
-                        m_RB.velocity = Vector2.zero;
-                        m_currentstate = SwingState.RIGHT;
-                    }
-                    //Go right
-
+                    leverDirection = 1;
                 }
                 break;
+
+
         }
 
+
     }
-
-
-   
-    void Start()
+    public void MoveCage(int dir)
     {
-        m_RB = GetComponent<Rigidbody2D>();
-        //Store current position
-        m_startpos = transform.position;
-
+        rightrope.Translate(moveSpeed * dir, 0, 0);
+        leftrope.Translate(moveSpeed * dir, 0, 0);
     }
-
-    private void OnDestroy()
-    {
-
-    }
-
-
     // Update is called once per frame
     void Update()
     {
-
+        DebugToggleLever();
     }
     private void FixedUpdate()
     {
-        m_RB.AddForce(m_Force, ForceMode2D.Force);
-        gameObject.transform.GetChild(1).gameObject.GetComponent<Rigidbody2D>().AddForce(m_Force / 2, ForceMode2D.Force);
 
-        gameObject.transform.GetChild(2).gameObject.GetComponent<Rigidbody2D>().AddForce(m_Force / 2, ForceMode2D.Force);
+        MoveCage(leverDirection);
+    
 
-        m_Force = Vector2.zero;
     }
 }
