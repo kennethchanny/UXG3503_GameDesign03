@@ -12,6 +12,7 @@ namespace TarodevController {
     /// </summary>
     public class PlayerController : MonoBehaviour, IPlayerController {
         private Vector3 velocity;
+        public bool inCage;
 
         // Public for external hooks
         public Vector3 GetVelocity()
@@ -50,8 +51,13 @@ namespace TarodevController {
 
             CalculateWalk(); // Horizontal movement
             CalculateJumpApex(); // Affects fall speed, so calculate before gravity
-            CalculateGravity(); // Vertical movement
-            CalculateJump(); // Possibly overrides vertical
+
+            if(!inCage)
+            {
+                CalculateGravity(); // Vertical movement
+                CalculateJump(); // Possibly overrides vertical
+            }
+            
 
             MoveCharacter(); // Actually perform the axis movement
         }
