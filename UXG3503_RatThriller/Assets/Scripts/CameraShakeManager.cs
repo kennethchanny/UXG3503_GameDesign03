@@ -26,6 +26,7 @@ public class CameraShakeManager : MonoBehaviour
     //Generate Screen Shake
     public void GenerateImpulse()
     {
+        
         camerashakeSource.GenerateImpulse();
     }
 

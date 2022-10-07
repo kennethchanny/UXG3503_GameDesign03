@@ -27,7 +27,7 @@ public class EventManager : MonoBehaviour
 
 
     public event Action onCameraShakeTriggered;
-    public void EventTriggered()
+    public void CameraShakeTriggered()
     {
         if (onCameraShakeTriggered != null)
         {
