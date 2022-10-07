@@ -48,12 +48,11 @@ namespace TarodevController {
 
             GatherInput();
             RunCollisionChecks();
-
-            CalculateWalk(); // Horizontal movement
-            CalculateJumpApex(); // Affects fall speed, so calculate before gravity
-
-            if(!inCage)
+            
+            if (!inCage)
             {
+                CalculateWalk(); // Horizontal movement
+                CalculateJumpApex(); // Affects fall speed, so calculate before gravity
                 CalculateGravity(); // Vertical movement
                 CalculateJump(); // Possibly overrides vertical
             }
@@ -160,7 +159,6 @@ namespace TarodevController {
         }
 
         #endregion
-
 
         #region Walk
 
