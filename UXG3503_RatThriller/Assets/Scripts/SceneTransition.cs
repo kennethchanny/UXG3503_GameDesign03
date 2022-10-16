@@ -9,6 +9,8 @@ public class SceneTransition : MonoBehaviour
     private void Start()
     {
         animRef = GetComponent<Animator>();
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void StartTransition()
@@ -25,4 +27,14 @@ public class SceneTransition : MonoBehaviour
     {
         Application.Quit();
     }
+
+    ///////////////////////Nicole added below
+    public Animation animatorMainMenu;
+    public void PlayMMPuppetAnim()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        animatorMainMenu.Play("MainMenu");
+    }
+
 }
