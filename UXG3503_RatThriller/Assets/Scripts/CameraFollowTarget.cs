@@ -44,7 +44,6 @@ public class CameraFollowTarget : MonoBehaviour
             {
                 EventManager.current.CameraShakeTriggered();
                 shaketriggered = true;
-                Debug.Log("Fired");
                 shakeinterval = 0.7f;
             }
 

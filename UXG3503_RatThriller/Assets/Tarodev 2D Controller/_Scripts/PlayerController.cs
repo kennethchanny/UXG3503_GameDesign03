@@ -12,7 +12,12 @@ namespace TarodevController {
     /// </summary>
     public class PlayerController : MonoBehaviour, IPlayerController {
         private Vector3 velocity;
+        public int playerNumber;
         public bool inCage;
+        [SerializeField] private CameraFollowTarget cameraFollowScript;
+        [SerializeField] private float slugReduction;
+        [SerializeField] private float maxslugValue;
+
 
         // Public for external hooks
         public Vector3 GetVelocity()
@@ -39,14 +44,14 @@ namespace TarodevController {
         private bool _active;
         void Awake() => Invoke(nameof(Activate), 0.5f);
         void Activate() =>  _active = true;
-        
+
         private void Update() {
             if(!_active) return;
             // Calculate velocity
             SetVelocity((transform.position - _lastPosition) / Time.deltaTime);
             _lastPosition = transform.position;
 
-            GatherInput();
+            GatherInput(playerNumber);
             RunCollisionChecks();
             
             if (!inCage)
@@ -64,15 +69,35 @@ namespace TarodevController {
 
         #region Gather Input
 
-        private void GatherInput() {
-            Input = new FrameInput {
-                JumpDown = UnityEngine.Input.GetButtonDown("Jump"),
-                JumpUp = UnityEngine.Input.GetButtonUp("Jump"),
-                X = UnityEngine.Input.GetAxisRaw("Horizontal")
-            };
-            if (Input.JumpDown) {
-                _lastJumpPressed = Time.time;
+        private void GatherInput(int playernumber) 
+        {
+            if(playernumber == 1)
+            {
+                Input = new FrameInput
+                {
+                    JumpDown = UnityEngine.Input.GetKeyDown(KeyCode.UpArrow),
+                    JumpUp = UnityEngine.Input.GetKeyUp(KeyCode.UpArrow),
+                    X = UnityEngine.Input.GetAxisRaw("Horizontal")
+                };
+                if (Input.JumpDown)
+                {
+                    _lastJumpPressed = Time.time;
+                }
             }
+            else if (playernumber == 2)
+            {
+                Input = new FrameInput
+                {
+                    JumpDown = UnityEngine.Input.GetKeyDown(KeyCode.W),
+                    JumpUp = UnityEngine.Input.GetKeyUp(KeyCode.W),
+                    X = UnityEngine.Input.GetAxisRaw("Horizontal2")
+                };
+                if (Input.JumpDown)
+                {
+                    _lastJumpPressed = Time.time;
+                }
+            }
+           
         }
 
         #endregion
@@ -274,11 +299,15 @@ namespace TarodevController {
         [Header("MOVE")] [SerializeField, Tooltip("Raising this value increases collision accuracy at the cost of performance.")]
         private int _freeColliderIterations = 10;
 
+
+
         // We cast our bounds before moving to avoid future collisions
         private void MoveCharacter() {
+
+            var sluggishmultiplier = Mathf.Clamp((cameraFollowScript.playerseparation / slugReduction),1,maxslugValue);
             var pos = transform.position;
             RawMovement = new Vector3(_currentHorizontalSpeed, _currentVerticalSpeed); // Used externally
-            var move = RawMovement * Time.deltaTime;
+            var move = RawMovement/sluggishmultiplier * Time.deltaTime;//divide by distance mod
             var furthestPoint = pos + move;
 
             // check furthest movement. If nothing hit, move and don't do extra checks

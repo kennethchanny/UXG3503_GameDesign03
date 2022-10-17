@@ -29,12 +29,12 @@ public class SceneTransition : MonoBehaviour
     }
 
     ///////////////////////Nicole added below
-    public Animation animatorMainMenu;
+
     public void PlayMMPuppetAnim()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        animatorMainMenu.Play("MainMenu");
+        animRef.SetTrigger("Transition");
     }
 
 }

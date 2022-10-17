@@ -88,7 +88,6 @@ public class postprocess : MonoBehaviour
         float vignettevalue = cameraplayerdistancecheckerref.playerseparation;
         vignetteref.intensity.Override(vignettevalue * dangerbloomintensitymultiplier);
 
-
         float coloradjustmentsvalue = cameraplayerdistancecheckerref.playerseparation;
         coloradjustmentsref.saturation.Override(-coloradjustmentsvalue * dangercolorintensitymultiplier);
         coloradjustmentsref.contrast.Override(-coloradjustmentsvalue * dangercolorintensitymultiplier);

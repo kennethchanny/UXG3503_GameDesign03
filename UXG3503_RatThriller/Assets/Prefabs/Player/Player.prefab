@@ -19526,7 +19526,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -19850,7 +19850,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbfb23717f7dee14688bccda60b77b9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNumber: 1
   inCage: 0
+  cameraFollowScript: {fileID: 0}
+  maxsluggishMultipler: 7
   _characterBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.5, y: 0.65, z: 0}
@@ -19945,7 +19948,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 2b83c87613c932e4ea92cc8df440a8dc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -20005,4 +20008,4 @@ MonoBehaviour:
   - {x: -0.1714682, y: 0.9095551, z: 0}
   m_ShapePathHash: -789670587
   m_Mesh: {fileID: 0}
-  m_InstanceId: 25892
+  m_InstanceId: -99684
