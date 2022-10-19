@@ -25,10 +25,12 @@ public class postprocess : MonoBehaviour
     public float dangerbloomintensitymultiplier = 0.05f;
     public float dangercolorintensitymultiplier = 0.05f;
 
-    private bool isinGame = false;
+
+    private bool isGameOver = false;
     // Start is called before the first frame update
     void Start()
     {
+        isGameOver = false;
         volume = gameObject.GetComponent<Volume>();
         volumeProfile = GetComponent<UnityEngine.Rendering.Volume>()?.profile;
         if (!volumeProfile) throw new System.NullReferenceException(nameof(UnityEngine.Rendering.VolumeProfile));
@@ -68,12 +70,11 @@ public class postprocess : MonoBehaviour
         filmgrainref = filmgrain;
 
 
-
     }
 
     private void OnDestroy()
     {
-        
+
     }
 
  
@@ -86,7 +87,7 @@ public class postprocess : MonoBehaviour
         bloomref.intensity.Override(bloomvalue * dangerbloomintensitymultiplier);
 
         float vignettevalue = cameraplayerdistancecheckerref.playerseparation;
-        vignetteref.intensity.Override(vignettevalue * dangerbloomintensitymultiplier);
+        vignetteref.intensity.Override(Mathf.Clamp(vignettevalue * dangerbloomintensitymultiplier,0.3f,7));
 
         float coloradjustmentsvalue = cameraplayerdistancecheckerref.playerseparation;
         coloradjustmentsref.saturation.Override(-coloradjustmentsvalue * dangercolorintensitymultiplier);
@@ -98,12 +99,19 @@ public class postprocess : MonoBehaviour
     }
 
 
-   
+    public void ResetPP()
+    {
+        isGameOver = true;
+        vignetteref.intensity.Override(0.4f);
+        filmgrainref.intensity.Override(0.3f);
+
+    }
 
 
     // Update is called once per frame
     void Update()
     {
+        if(!isGameOver)
         UpdateSeparationPostProcess();
     }
 }

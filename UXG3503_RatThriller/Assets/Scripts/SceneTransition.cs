@@ -13,10 +13,7 @@ public class SceneTransition : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
-    public void StartTransition()
-    {
-        animRef.SetTrigger("TransitionOut");
-    }
+
     public void NextScene()
     {
 

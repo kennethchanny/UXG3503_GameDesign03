@@ -35,4 +35,14 @@ public class EventManager : MonoBehaviour
         }
 
     }
+
+    public event Action onGameOver;
+    public void GameOverTriggered()
+    {
+        if (onGameOver != null)
+        {
+            onGameOver();
+        }
+
+    }
 }

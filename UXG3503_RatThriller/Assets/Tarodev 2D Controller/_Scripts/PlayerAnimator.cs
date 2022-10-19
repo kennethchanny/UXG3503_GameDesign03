@@ -39,8 +39,12 @@ namespace TarodevController {
             // Speed up idle while running
             _anim.SetFloat(IdleSpeedKey, Mathf.Lerp(1, _maxIdleSpeed, Mathf.Abs(_player.Input.X)));
 
-            // Splat
-            if (_player.LandingThisFrame) {
+         
+           
+
+
+                // Splat
+                if (_player.LandingThisFrame) {
                 _anim.SetTrigger(GroundedKey);
                 _source.PlayOneShot(_footsteps[Random.Range(0, _footsteps.Length)]);
             }
@@ -52,6 +56,7 @@ namespace TarodevController {
 
                 // Only play particles when grounded (avoid coyote)
                 if (_player.Grounded) {
+
                     SetColor(_jumpParticles);
                     SetColor(_launchParticles);
                     _jumpParticles.Play();
@@ -61,6 +66,7 @@ namespace TarodevController {
             // Play landing effects and begin ground movement effects
             if (!_playerGrounded && _player.Grounded) {
                 _playerGrounded = true;
+
                 _moveParticles.Play();
                 _landParticles.transform.localScale = Vector3.one * Mathf.InverseLerp(0, _maxParticleFallSpeed, _movement.y);
                 SetColor(_landParticles);
@@ -99,6 +105,7 @@ namespace TarodevController {
         private static readonly int GroundedKey = Animator.StringToHash("Grounded");
         private static readonly int IdleSpeedKey = Animator.StringToHash("IdleSpeed");
         private static readonly int JumpKey = Animator.StringToHash("Jump");
+        private static readonly int RunKey = Animator.StringToHash("Run");
 
         #endregion
     }
