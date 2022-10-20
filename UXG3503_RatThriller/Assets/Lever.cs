@@ -5,50 +5,44 @@ using UnityEngine;
 public class Lever : MonoBehaviour
 {
     private Animator animref;
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        Debug.Log("OI");
-        if(collision.gameObject.tag == "Player")
-        {
-            switch (collision.gameObject.name)
-            {
 
-                case "GretelPlayer1":
-                    {
-                        if(Input.GetKeyDown(KeyCode.DownArrow))
-                        {
-                            ToggleLever();
-                        }
-                    }
-                    break;
+    private GameObject player1;
+    private GameObject player2;
 
-                case "HanselPlayer2":
-                    {
-                        if (Input.GetKeyDown(KeyCode.S))
-                        {
-                            ToggleLever();
-                        }
-                    }
-                    break;
-
-
-            }
-
-        }
-    }
+    public float leverDistance;
+   
 
     void ToggleLever()
     {
-        animref.SetTrigger("ToggleLever");
+        if(Vector2.Distance(player1.transform.position, transform.position) < leverDistance)
+        {
+      
+            if(Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                animref.SetTrigger("ToggleLever");
+            }
+           
+        }
+
+        if (Vector2.Distance(player2.transform.position, transform.position) < leverDistance && Input.GetKeyDown(KeyCode.S))
+        {
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                animref.SetTrigger("ToggleLever");
+            }
+        }
+
     }
     void Start()
     {
         animref = GetComponent<Animator>();
+        player1 = GameObject.Find("GretelPlayer1");
+        player2 = GameObject.Find("HanselPlayer2");
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        ToggleLever();
     }
 }
