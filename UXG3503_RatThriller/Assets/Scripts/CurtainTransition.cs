@@ -25,9 +25,14 @@ public class CurtainTransition : MonoBehaviour
         EventManager.current.onGameOver -= CurtainClose;
     }
 
-    public void ResetPP()
+    public void TurnOffPost()
     {
-        postprocessref.ResetPP();
+        postprocessref.OffPP();
+    }
+
+    public void TurnOnPost()
+    {
+        postprocessref.OnPP();
     }
     public void CurtainClose()
     {

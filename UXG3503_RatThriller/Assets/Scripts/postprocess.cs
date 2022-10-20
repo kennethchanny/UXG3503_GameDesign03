@@ -26,11 +26,11 @@ public class postprocess : MonoBehaviour
     public float dangercolorintensitymultiplier = 0.05f;
 
 
-    private bool isGameOver = false;
+    public bool isinGame = false;
     // Start is called before the first frame update
     void Start()
     {
-        isGameOver = false;
+        
         volume = gameObject.GetComponent<Volume>();
         volumeProfile = GetComponent<UnityEngine.Rendering.Volume>()?.profile;
         if (!volumeProfile) throw new System.NullReferenceException(nameof(UnityEngine.Rendering.VolumeProfile));
@@ -80,6 +80,8 @@ public class postprocess : MonoBehaviour
  
     void UpdateSeparationPostProcess()
     {
+            
+        
         float chromaticvalue = cameraplayerdistancecheckerref.playerseparation;
         chromaticabberationref.intensity.Override(chromaticvalue * dangerchromaticabberationintensitymultiplier);
 
@@ -99,19 +101,24 @@ public class postprocess : MonoBehaviour
     }
 
 
-    public void ResetPP()
+    public void OffPP()
     {
-        isGameOver = true;
-        vignetteref.intensity.Override(0.4f);
-        filmgrainref.intensity.Override(0.3f);
+        isinGame = false;
+        vignetteref.intensity.Override(0.2f);
+        filmgrainref.intensity.Override(0.2f);
+       
+    }
 
+    public void OnPP()
+    {
+        isinGame = true;
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        if(!isGameOver)
+        if(isinGame)
         UpdateSeparationPostProcess();
     }
 }
