@@ -45,4 +45,14 @@ public class EventManager : MonoBehaviour
         }
 
     }
+
+    public event Action<int> onLeverPulled;
+    public void LeverPulled(int id)
+    {
+        if (onLeverPulled != null)
+        {
+            onLeverPulled(id);
+        }
+
+    }
 }

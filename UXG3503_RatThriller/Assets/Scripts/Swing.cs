@@ -8,41 +8,50 @@ public class Swing : MonoBehaviour
     public int leverDirection = 0;
     public Transform rightrope;
     public Transform leftrope;
+    public int id = 1;
 
-    public void DebugToggleLever()
+  
+
+    public void ToggleLever(int id)
     {
-        if(Input.GetKeyDown(KeyCode.K))
+        if (id == this.id)
         {
-            ToggleLever();
-            Debug.Log(leverDirection);
+
+
+            switch (leverDirection)
+            {
+
+                case 0:
+                    {
+                        leverDirection = 1;
+                    }
+                    break;
+                case 1:
+                    {
+                        leverDirection = -1;
+                    }
+                    break;
+                case -1:
+                    {
+                        leverDirection = 1;
+                    }
+                    break;
+
+
+            }
         }
+
+
     }
 
-    public void ToggleLever()
+    private void Start()
     {
-        switch (leverDirection)
-        {
+        EventManager.current.onLeverPulled += ToggleLever;
+    }
 
-            case 0:
-                {
-                    leverDirection = 1;
-                }
-                break;
-            case 1:
-                {
-                    leverDirection = -1;
-                }
-                break;
-            case -1:
-                {
-                    leverDirection = 1;
-                }
-                break;
-
-
-        }
-
-
+    private void OnDestroy()
+    {
+        EventManager.current.onLeverPulled -= ToggleLever;
     }
     public void MoveCage(int dir)
     {
@@ -52,7 +61,6 @@ public class Swing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DebugToggleLever();
     }
     private void FixedUpdate()
     {

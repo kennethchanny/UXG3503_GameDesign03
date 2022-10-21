@@ -117,6 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3879e52a446d34796769c41ccc047f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leverDistance: 2
 --- !u!61 &3975104505449625265
 BoxCollider2D:
   m_ObjectHideFlags: 0
